@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="main">
     <ion-title>
-      Ionic Blank
+      {{test ? "oshou.love (Testnet)":"oshou.love"}}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <div class="oshou-content">
+    <h2 class="title">投げ銭すると和尚が反応します</h2>
+    <button ion-button icon-start outline small color="dark" (click)="copy()">
+      <ion-icon name="copy"></ion-icon>
+      {{address}}
+    </button>
+    <div *ngIf="test">※ Testnet用のアカウントです</div>
+    <div>
+      <div class="oshou" [innerHTML]="oshou"></div>
+    </div>
+  </div>
+  <hr>
+  <ion-list>
+    <ion-item class="unconfirmed" *ngFor="let t of unconfirmed | orderBy">
+      <h3><span class="amount">{{(t['transaction'].amount + t['transaction'].fee) / 1000000}}XEM</span> : <span class="date">{{t['transaction'].timeStamp | fmtNemDate | date:'yyyy-MM-dd HH:mm:ss':'+0900'}}</span></h3>
+      <h2 class="message" *ngIf="t['transaction'].message.payload" [style.font-size.px]="(t['transaction'].amount) / 1000000 | normalizeFontSize" >{{t['transaction'].message.payload | fmtHexToUtf8}}</h2>
+      <h2 class="message none" *ngIf="!t['transaction'].message.payload">メッセージなし</h2>
+    </ion-item>
+    <ng-container *ngFor="let t of confirmed | orderBy; let idx = index">
+      <ion-item class="confirmed" *ngIf="idx < 10">
+        <h3><span class="amount">{{(t['transaction'].amount + t['transaction'].fee) / 1000000}}XEM</span> : <span class="date">{{t['transaction'].timeStamp | fmtNemDate | date:'yyyy-MM-dd HH:mm:ss':'+0900'}}</span></h3>
+        <h2 class="message" *ngIf="t['transaction'].message.payload" [style.font-size.px]="(t['transaction'].amount) / 1000000 | normalizeFontSize" [innerHTML]="t['transaction'].message.payload | fmtHexToUtf8 | replaceLineHtml"></h2>
+        <h2 class="message none" *ngIf="!t['transaction'].message.payload">メッセージなし</h2>
+      </ion-item>
+    </ng-container>
+  </ion-list>
 </ion-content>

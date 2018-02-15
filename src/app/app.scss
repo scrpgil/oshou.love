@@ -1,5 +1,16 @@
 // http://ionicframework.com/docs/theming/
+@font-face {
+  font-family: 'aahub';
+  src: url("../assets/fonts/aahub.woff");
+}
 
+html, body, ion-app,ion-content,.nav-decor {
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -ms-user-select: auto;
+    -moz-user-select: auto;
+    user-select: auto;
+}
 
 // App Global Sass
 // --------------------------------------------------
