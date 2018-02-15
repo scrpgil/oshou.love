@@ -7,7 +7,7 @@ import nem from "nem-sdk";
     templateUrl: 'home.html'
 })
 export class HomePage {
-    test:boolean = false;
+    test:boolean = true;
     endpoint:any;
     ding:any;
     ding2:any;
@@ -113,7 +113,7 @@ export class HomePage {
         s.left = '-100%';
         document.body.appendChild(temp);
         document.getSelection().selectAllChildren(temp);
-        var result = document.execCommand('copy');
+        document.execCommand('copy');
         document.body.removeChild(temp);
         let toast = this.toastCtrl.create({
             message: 'コピーしました',
